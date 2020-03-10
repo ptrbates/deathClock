@@ -1,5 +1,5 @@
 import React from "react";
-import { lifeTables } from "./lifeTables";
+import { lifeTables } from "../assets/lifeTables";
 
 function Output(props) {
   const lifeTable = getLifeTable(props.gender, props.race);

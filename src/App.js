@@ -1,6 +1,6 @@
 import React from "react";
-import Input from "./Input";
-import Output from "./Output";
+import Input from "./components/Input";
+import Output from "./components/Output";
 
 class App extends React.Component {
   constructor(props) {
