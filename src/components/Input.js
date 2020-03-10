@@ -1,7 +1,7 @@
 import React from "react";
-import BirthDateSelect from "./birthDateSelect";
-import GenderSelect from "./genderSelect";
-import RaceSelect from "./raceSelect";
+import BirthDateSelect from "./BirthDateSelect";
+import GenderSelect from "./GenderSelect";
+import RaceSelect from "./RaceSelect";
 
 class Input extends React.Component {
   render() {
