@@ -1,32 +1,24 @@
 import React from "react";
 import BirthDateSelect from "./BirthDateSelect";
-import GenderSelect from "./GenderSelect";
-import RaceSelect from "./RaceSelect";
+import RaceGenderSelect from "./RaceGenderSelect";
 
-class Input extends React.Component {
-  render() {
-    return (
-      <div className="column-container">
-        <h1>Enter some of your information:</h1>
-        <BirthDateSelect
-          birthYear={this.props.birthYear}
-          onBirthYearChange={this.props.onBirthYearChange}
-          birthMonth={this.props.birthMonth}
-          onBirthMonthChange={this.props.onBirthMonthChange}
-        />
-        <br />
-        <GenderSelect
-          gender={this.props.gender}
-          onGenderChange={this.props.onGenderChange}
-        />
-        <br />
-        <RaceSelect
-          race={this.props.race}
-          onRaceChange={this.props.onRaceChange}
-        />
-      </div>
-    );
-  }
+function Input(props) {
+  return (
+    <div data-testid="input-box" className="column-container">
+      <h1>Enter some of your information:</h1>
+      <BirthDateSelect
+        birthYear={props.birthYear}
+        birthMonth={props.birthMonth}
+        onChange={props.onChange}
+      />
+      <br />
+      <RaceGenderSelect
+        gender={props.gender}
+        race={props.race}
+        onChange={props.onChange}
+      />
+    </div>
+  );
 }
 
 export default Input;

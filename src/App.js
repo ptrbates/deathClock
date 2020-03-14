@@ -6,46 +6,28 @@ import "./App.css";
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.onBirthYearChange = this.onBirthYearChange.bind(this);
-    this.onBirthMonthChange = this.onBirthMonthChange.bind(this);
-    this.onGenderChange = this.onGenderChange.bind(this);
-    this.onRaceChange = this.onRaceChange.bind(this);
+    this.onChange = this.onChange.bind(this);
     this.state = {
-      birthYear: 2000,
+      birthYear: 2020,
       birthMonth: 1,
       gender: "",
       race: ""
     };
   }
 
-  onBirthYearChange(year) {
-    this.setState({ birthYear: year });
-  }
-
-  onBirthMonthChange(month) {
-    this.setState({ birthMonth: month });
-  }
-
-  onGenderChange(gender) {
-    this.setState({ gender: gender });
-  }
-
-  onRaceChange(race) {
-    this.setState({ race: race });
+  onChange(name, value) {
+    this.setState({ [name]: value });
   }
 
   render() {
     return (
-      <div className="row-container">
+      <div data-testid="main-app" className="row-container">
         <Input
           birthYear={this.state.birthYear}
           birthMonth={this.state.birthMonth}
           gender={this.state.gender}
           race={this.state.race}
-          onBirthYearChange={this.onBirthYearChange}
-          onBirthMonthChange={this.onBirthMonthChange}
-          onGenderChange={this.onGenderChange}
-          onRaceChange={this.onRaceChange}
+          onChange={this.onChange}
         />
         <Output
           birthYear={this.state.birthYear}

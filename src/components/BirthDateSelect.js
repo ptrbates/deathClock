@@ -1,63 +1,42 @@
 import React from "react";
 
-class BirthDateSelect extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleYearChange = this.handleYearChange.bind(this);
-    this.handleMonthChange = this.handleMonthChange.bind(this);
-  }
-
-  handleYearChange(event) {
-    this.props.onBirthYearChange(event.target.value);
-  }
-
-  handleMonthChange(event) {
-    this.props.onBirthMonthChange(event.target.value);
-  }
-
-  getYearOptions() {
-    const thisYear = new Date().getFullYear();
-    const years = [];
-
-    for (let year = thisYear; year > thisYear - 100; year--) {
-      years.push(
-        <option key={year} value={year}>
-          {year}
-        </option>
-      );
-    }
-
-    return years;
-  }
-
-  getMonthOptions() {
-    const months = [];
-
-    for (let month = 1; month <= 12; month++) {
-      months.push(
-        <option key={month} value={month}>
-          {month}
-        </option>
-      );
-    }
-
-    return months;
-  }
-
-  render() {
-    return (
-      <label>
+function BirthDateSelect(props) {
+  return (
+    <React.Fragment>
+      <label data-testid="birthyear-select">
         Birth year:
-        <select value={this.props.birthYear} onChange={this.handleYearChange}>
-          {this.getYearOptions()}
-        </select>
-        <br />
-        Birth month:
-        <select value={this.props.birthMonth} onChange={this.handleMonthChange}>
-          {this.getMonthOptions()}
+        <select name="birthYear" value={props.birthYear} onChange={onChange}>
+          {getDateOptions("year")}
         </select>
       </label>
-    );
+      <br />
+      <label data-testid="birthmonth-select">
+        Birth month:
+        <select name="birthMonth" value={props.birthMonth} onChange={onChange}>
+          {getDateOptions("month")}
+        </select>
+      </label>
+    </React.Fragment>
+  );
+
+  function onChange(event) {
+    props.onChange(event.target.name, event.target.value);
+  }
+
+  function getDateOptions(unit) {
+    const result = [""];
+    const thisYear = new Date().getFullYear();
+    const [start, end] = unit === "year" ? [thisYear, thisYear - 100] : [12, 0];
+
+    for (let element = start; element > end; element--) {
+      result.push(
+        <option key={element} value={element}>
+          {element}
+        </option>
+      );
+    }
+
+    return result;
   }
 }
 

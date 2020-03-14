@@ -4,23 +4,29 @@ import { lifeTables } from "../assets/lifeTables";
 function Output(props) {
   const lifeTable = getLifeTable(props.gender, props.race);
   const age = getAge(props.birthYear, props.birthMonth);
-  const [years, months, weeks, days] = getLifeExpectancy(age);
-  const chance = getDeathChance(age);
+  const lifeTableRow = lifeTable[age];
+  const [years, months, weeks, days] = getLifeExpectancy(lifeTableRow);
+  const chance = getDeathChance(lifeTableRow);
   const portion = getPortion(Number(age), Number(years));
 
   return (
-    <div className="column-container">
-      <h1>How much time do you have left?</h1>
-      <div className="time-box">{years} years </div>
-      <div className="time-box">{months} months </div>
-      <div className="time-box">{weeks} weeks </div>
-      <div className="time-box">{days} days </div>
-      <h1>The clock is ticking...</h1>
-      <h2>And you could die at any time.</h2>
-      <h3>
-        In fact, you have a {chance}% chance of dying before your next birthday.
-      </h3>
-      <h3>Hell, you're already {portion}% of the way through your life.</h3>
+    <div data-testid="output-box" className="column-container">
+      <div data-testid="time-boxes">
+        <h1>How much time do you have left?</h1>
+        <div className="time-box">{years} years </div>
+        <div className="time-box">{months} months </div>
+        <div className="time-box">{weeks} weeks </div>
+        <div className="time-box">{days} days </div>
+      </div>
+      <div data-testid="chance-numbers">
+        <h1>The clock is ticking...</h1>
+        <h2>And you could die at any time.</h2>
+        <h3>
+          In fact, you have a {chance}% chance of dying before your next
+          birthday.
+        </h3>
+        <h3>Hell, you're already {portion}% of the way through your life.</h3>
+      </div>
     </div>
   );
 
@@ -45,11 +51,11 @@ function Output(props) {
     const birthDate = new Date(Number(year), Number(month));
     const age = ((thisDate - birthDate) / millisecondsPerYear).toFixed(0);
 
-    return age;
+    return age > 0 ? age : 0;
   }
 
-  function getLifeExpectancy(age) {
-    const years = lifeTable[age].lifeRemaining.toFixed(2);
+  function getLifeExpectancy(row) {
+    const years = row.lifeRemaining.toFixed(2);
     const months = (years * 12).toFixed(1);
     const weeks = (years * 52).toFixed(0);
     const days = (years * 365.25).toFixed(0);
@@ -57,8 +63,8 @@ function Output(props) {
     return [years, months, weeks, days];
   }
 
-  function getDeathChance(age) {
-    return (lifeTable[age].deathChance * 100).toFixed(3);
+  function getDeathChance(row) {
+    return (row.deathChance * 100).toFixed(3);
   }
 
   function getPortion(age, years) {
@@ -67,3 +73,5 @@ function Output(props) {
 }
 
 export default Output;
+
+// TODO add current age, total projected age, projected death year/etc.
